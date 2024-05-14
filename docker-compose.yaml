@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  # Django application
+  web:
+    container_name: django_app
+    command: python manage.py runserver 0.0.0.0:8000
+    build: ./
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
+   # Database (SQLite)
+  db:
+    container_name: sqlite_db
+    build: ./
+    volumes:
+      - ./app/db.sqlite3:/app/db.sqlite3
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  # Celery worker
+  celery_worker:
+    build: ./
+    command: celery -A app worker --loglevel=info
+    volumes:
+      - ./app:/app
+    depends_on:
+      - web
+      - redis
+
+  # Celery beat
+  celery_beat:
+    build: ./
+    command: celery -A app beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - ./app:/app
+    depends_on:
+      - web
+      - redis

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <h3>You have been successfully logged out</h3>
+                <p><i>Thank you for using DjangoWeatherReminder. We hope to see you again soon!</i></p>
+                <p class="mt-4">
+                    <a href="{% url 'main_page' %}" class="btn btn-secondary">Back to Home</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

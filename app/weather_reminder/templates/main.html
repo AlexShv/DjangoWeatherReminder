@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <h2 class="mb-4"><i>Welcome to DjangoWeatherReminder!</i></h2>
+                <p class="lead">
+                    This application provides personalized weather updates for your city.
+                    To start receiving weather notifications, follow these steps:
+                </p>
+                <ol class="text-left lead">
+                    <li><a href="{% url 'token_obtain_pair' %}">Click on the link to obtain an authentication token</a></li>
+                </ol>
+                <ol start="2" class="text-left lead">
+                    <li>Copy the obtained token.</li>
+                    <li>Use the token to subscribe to weather updates using our API.</li>
+                    <li>Enjoy personalized weather notifications for your city!</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+{% endblock %}
